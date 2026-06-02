@@ -2,6 +2,31 @@
 session_start();
 require "../config/database.php";
 
+// Auto login dari cookie
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
+
+    $stmt = $pdo->prepare(
+        "SELECT * FROM users WHERE remember_token = ?"
+    );
+
+    $stmt->execute([$_COOKIE['remember_token']]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_photo'] = $user['photo'];
+        $_SESSION['role'] = $user['role'];
+    }
+}
+
+// Jika masih belum login
+if (!isset($_SESSION['user_id'])) {
+    echo "<script>window.location.href='../auth/login.php';</script>";
+    exit();
+}
+
 $userName = $_SESSION['user_name'] ?? 'User';
 $userPhoto = $_SESSION['user_photo'] ?? null;
 $uid = $_SESSION['user_id'] ?? 0;
@@ -28,7 +53,7 @@ $photoUrl  = '/uploads/' . $userPhoto;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Apps</title>
+    <title>Woyzix - Financial Apps</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

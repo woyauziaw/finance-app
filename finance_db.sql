@@ -89,6 +89,7 @@ CREATE TABLE `users` (
   `otp_code` varchar(6) DEFAULT NULL,
   `otp_expiry` datetime DEFAULT NULL,
   `role` enum('user','admin') DEFAULT 'user'
+  `remember_token` VARCHAR(64) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

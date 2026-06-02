@@ -10,22 +10,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
+   
     
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
         $_SESSION['user_photo'] = $user['photo'];
         $_SESSION['role'] = $user['role'];
+        // Remember Login 30 Hari
+        $token = bin2hex(random_bytes(32)); 
+        
+        $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+        $stmt->execute([$token, $user['id']]); 
+        setcookie(
+          'remember_token',
+          $token,
+          time() + (86400 * 30),
+          '/',
+          '',
+          false,
+          true
+        );
+        
         echo "<script>document.addEventListener('DOMContentLoaded', function() { Swal.fire({icon: 'success', title: 'Berhasil!', text: 'Selamat datang kembali!', timer: 1200, showConfirmButton: false}).then(() => { window.location.href = '../pages/dashboard.php'; }); });</script>";
     } else { $error = 'Kredensial salah!'; }
 }
-?> 
-
-
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login Account</title>
+    <title>Login - Woyzix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
