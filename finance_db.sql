@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 24, 2026 at 11:23 PM
+-- Generation Time: Jun 04, 2026 at 04:34 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.10
 
@@ -42,6 +42,40 @@ CREATE TABLE `changelogs` (
 INSERT INTO `changelogs` (`id`, `version`, `release_date`, `description`, `created_at`) VALUES
 (1, 'v1.0.0', '2026-01-10', 'Rilis awal sistem pencatatan keuangan masuk dan keluar.', '2026-05-22 08:08:09');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `goals`
+--
+
+CREATE TABLE `goals` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nama_target` varchar(100) NOT NULL,
+  `nominal_target` decimal(15,2) NOT NULL,
+  `nominal_sekarang` decimal(15,2) DEFAULT 0.00,
+  `kategori_icon` varchar(50) DEFAULT 'target',
+  `tgl_target` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `goal_deposits`
+--
+
+CREATE TABLE `goal_deposits` (
+  `id` int(11) NOT NULL,
+  `goal_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `jumlah` decimal(15,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `goal_deposits`
+--
 -- --------------------------------------------------------
 
 --
@@ -88,8 +122,8 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `otp_code` varchar(6) DEFAULT NULL,
   `otp_expiry` datetime DEFAULT NULL,
-  `role` enum('user','admin') DEFAULT 'user'
-  `remember_token` VARCHAR(64) NULL
+  `role` enum('user','admin') DEFAULT 'user',
+  `remember_token` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -97,7 +131,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `photo`, `created_at`, `otp_code`, `otp_expiry`, `role`) VALUES
-(5, 'admin', 'admin@gmail.com', '$2y$10$TfhXe5If8G9G6lG/Wvw.JuWcqWfKTGtO4u4JCY.3HEIkGiP18vdxC', 'default.png', '2026-05-24 23:21:56', NULL, NULL, 'admin');
+(5, 'admin', 'admin@gmail.com', '$2y$10$TfhXe5If8G9G6lG/Wvw.JuWcqWfKTGtO4u4JCY.3HEIkGiP18vdxC', 'default.png', '2026-05-24 23:21:56', NULL, NULL, 'admin'); 
 
 --
 -- Indexes for dumped tables
@@ -107,6 +141,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `photo`, `created_at`, `
 -- Indexes for table `changelogs`
 --
 ALTER TABLE `changelogs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `goals`
+--
+ALTER TABLE `goals`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `goal_deposits`
+--
+ALTER TABLE `goal_deposits`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -139,25 +185,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `changelogs`
 --
 ALTER TABLE `changelogs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `goals`
+--
+ALTER TABLE `goals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `goal_deposits`
+--
+ALTER TABLE `goal_deposits`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -180,3 +238,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
