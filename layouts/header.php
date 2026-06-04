@@ -1,6 +1,53 @@
 <?php
 session_start();
 require "../config/database.php";
+$page_title = WEB_NAME . ' — Financial App';
+$current_page = basename($_SERVER['PHP_SELF']);
+$page_desc = "Kelola pemasukan, pengeluaran, target tabungan, dan laporan keuangan dalam satu dashboard modern.";
+
+switch ($current_page) {
+
+    case 'dashboard.php':
+        $page_title = "Dashboard Keuangan";
+        $page_desc = "Pantau ringkasan keuangan, saldo, pemasukan, pengeluaran, dan progres target tabungan secara real-time.";
+        break;
+
+    case 'transaksi.php':
+        $page_title = "Transaksi Keuangan";
+        $page_desc = "Kelola semua pemasukan dan pengeluaran, catat transaksi harian, dan lihat riwayat keuanganmu.";
+        break;
+
+    case 'goal.php':
+        $page_title = "Target Keuangan";
+        $page_desc = "Buat dan pantau target tabunganmu, lihat progres, dan capai tujuan finansial lebih cepat.";
+        break;
+
+    case 'kategori.php':
+        $page_title = "Kategori Keuangan";
+        $page_desc = "Atur kategori pemasukan dan pengeluaran agar pencatatan keuangan lebih rapi dan terstruktur.";
+        break;
+
+    case 'profile.php':
+        $page_title = "Profil Pengguna";
+        $page_desc = "Kelola data akun, pengaturan pribadi, dan preferensi aplikasi keuanganmu.";
+        break;
+
+    case 'changelogs.php':
+        $page_title = "Update & Changelog";
+        $page_desc = "Lihat pembaruan fitur terbaru, perbaikan bug, dan perkembangan aplikasi finansial ini.";
+        break;
+
+   /* case 'index.php': // landing page
+        $page_title = "WOYCX Finance App";
+        $page_desc = "Aplikasi manajemen keuangan modern untuk mencatat pemasukan, pengeluaran, dan target tabungan dengan mudah.";
+        break; */
+
+    default:
+        $page_title = "WOYCX Finance App";
+        $page_desc = "Aplikasi keuangan modern untuk mengelola pemasukan, pengeluaran, dan target finansial.";
+        break;
+}
+$preview_image = $WEB_DOMAIN . "/assets/img/2.jpg"; 
 
 // Auto login dari cookie
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
@@ -54,6 +101,33 @@ $photoUrl  = '/uploads/' . $userPhoto;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= WEB_NAME ?> - Financial Apps</title>
+
+    <meta name="title" content="<?= $WEB_NAME ?> | <?= $page_title ?>">
+    <meta name="description" content="<?= $page_desc ?>">
+    <meta name="keywords" content="finance app, keuangan, budgeting, tabungan, target keuangan, laporan keuangan">
+    <meta name="author" content="WOYCX">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="id">
+    <meta name="theme-color" content="#4F46E5">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= $WEB_DOMAIN ?>">
+    <meta property="og:title" content="<?= $WEB_NAME ?> | <?= $page_title ?>">
+    <meta property="og:description" content="<?= $page_desc ?>">
+    <meta property="og:image" content="<?= $preview_image ?>">
+    <meta property="og:image:secure_url" content="<?= $preview_image ?>">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:site_name" content="<?= $WEB_NAME ?>">
+    <meta property="og:locale" content="id_ID">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= $WEB_NAME ?> | <?= $page_title ?>">
+    <meta name="twitter:description" content="<?= $page_desc ?>">
+    <meta name="twitter:image" content="<?= $preview_image ?>">
+    
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/img/favicon.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -127,5 +201,6 @@ window.addEventListener("load", function () {
 
             </div>
         </header>
+        <?php include "breadcrumb.php"; ?>
 
         <main class="p-6 flex-1">

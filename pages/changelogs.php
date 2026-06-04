@@ -1,6 +1,7 @@
 <?php
+$breadcrumb_parent = "Pages";
+$breadcrumb_active = "Changelogs";
 include '../layouts/header.php';
-
 /* =========================
    ROLE CHECK
 ========================= */

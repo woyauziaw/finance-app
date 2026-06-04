@@ -10,6 +10,7 @@
             <a href="../pages/transaksi.php" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all <?= $current === 'transaksi' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50' ?>"><i data-lucide="arrow-left-right"></i> Transaksi</a>
             <a href="../pages/kategori.php" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all <?= $current === 'kategori' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50' ?>"><i data-lucide="tags"></i> Kategori</a>
             <a href="../pages/importcsv.php" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium <?= $current === 'import' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700' ?>"><i data-lucide="file-up"></i> Import Data</a>
+            <a href="../pages/goal.php" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition <?= $active ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700' ?>"><i data-lucide="target"></i>Goal</a>
             
             <a href="../pages/changelogs.php"
    class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all

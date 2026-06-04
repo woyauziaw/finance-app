@@ -1,4 +1,6 @@
 <?php
+$breadcrumb_parent = "Pages";
+$breadcrumb_active = "Transaksi"; 
 include '../layouts/header.php'; 
 $uid = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

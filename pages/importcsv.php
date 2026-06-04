@@ -1,4 +1,6 @@
 <?php
+$breadcrumb_parent = "Pages";
+$breadcrumb_active = "Importcsv";
 include '../layouts/header.php';
 
 $uid = $_SESSION['user_id'];

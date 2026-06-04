@@ -1,6 +1,7 @@
 <?php
+$breadcrumb_parent = "Pages";
+$breadcrumb_active = "Profile"; 
 include '../layouts/header.php';
-
 ob_start();
 
 $uid = $_SESSION['user_id'];
