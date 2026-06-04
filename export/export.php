@@ -30,7 +30,7 @@ $transactions = $stmt->fetchAll();
 /* =========================
    HEADER FILE DOWNLOAD CSV
 ========================= */
-$filename = "fintrack_export_" . date("Ymd_His") . ".csv";
+$filename = <?= WEB_NAME ?> . "_export_" . date("Ymd_His") . ".csv";
 
 header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);

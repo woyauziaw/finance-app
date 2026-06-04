@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($rawData)) {
                 $_SESSION['import_preview'] = $rawData;
                 $previewData = $rawData;
-                $importLog = "Preview siap: " . count($rawData) . " data";
+                $importLog = "Preview: " . count($rawData) . " data";
             } else {
                 $importLog = "Tidak ada data valid (cek format CSV)";
             }
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="import_file" class="cursor-pointer">
             <i data-lucide="cloud-lightning" class="w-12 h-12 mx-auto mb-2 text-blue-500 animate-bounce"></i>
             <span class="text-sm font-semibold block text-slate-300">Klik untuk upload CSV</span>
-            <span class="text-xs text-slate-500 block mt-1">Auto proses tanpa tombol submit</span>
+            <span class="text-xs text-slate-500 block mt-1">Proses cepat anti lelet!</span>
         </label>
 
     </div>
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td class="p-3"><?= $p['tanggal'] ?></td>
                                 <td class="p-3 uppercase text-xs font-bold <?= $p['jenis'] === 'pemasukan' ? 'text-emerald-500' : 'text-rose-500' ?>"><?= $p['jenis'] ?></td>
                                 <td class="p-3"><span class="px-2 py-0.5 bg-blue-500/10 text-blue-500 rounded text-xs"><?= htmlspecialchars($p['kategori']) ?></span></td>
-                                <td class="p-3 font-mono"><?= number_format($p['nominal'], 0, ',', '.') ?></td>
+                                <td class="p-3 font-mono"><?= number_format($p['jumlah'], 0, ',', '.') ?></td>
                                 <td class="p-3 text-slate-400"><?= htmlspecialchars($p['deskripsi']) ?></td>
                             </tr>
                         <?php endforeach; ?>

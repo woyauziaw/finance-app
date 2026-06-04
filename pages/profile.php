@@ -62,6 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 // upload file baru
+                $maxSize = 2 * 1024 * 1024; // 2MB
+
+                if ($_FILES['photo']['size'] > $maxSize) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => 'Ukuran gambar maksimal 2MB'
+                    ];
+                    echo "<script>window.location.href = 'profile.php';</script>";
+                    exit;
+                }
+                
                 if (move_uploaded_file($_FILES['photo']['tmp_name'], $target)) {
 
                     $pdo->prepare("UPDATE users SET photo = ? WHERE id = ?")
@@ -109,24 +120,43 @@ if (isset($_POST['delete_photo'])) {
 
         $old = $_POST['old_password'];
         $new = $_POST['new_password'];
-
-        $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
-        $stmt->execute([$uid]);
-        $pwdDb = $stmt->fetchColumn();
-
-        if (password_verify($old, $pwdDb)) {
-
-            $newHashed = password_hash($new, PASSWORD_BCRYPT);
-
-            $pdo->prepare("UPDATE users SET password = ? WHERE id = ?")
-                ->execute([$newHashed, $uid]);
-
-            $message = 'Password Berhasil Diganti!';
-            $msgType = 'success';
-
+        
+        if (strlen($new) < 8) {
+          $message = 'Password minimal 8 karakter.';
+          $msgType = 'error';
+        } elseif (!preg_match('/[A-Z]/', $new)) {
+          $message = 'Password harus mengandung huruf besar.';
+          $msgType = 'error';
+        } elseif (!preg_match('/[a-z]/', $new)) {
+          $message = 'Password harus mengandung huruf kecil.';
+          $msgType = 'error';
+        } elseif (!preg_match('/[0-9]/', $new)) {
+          $message = 'Password harus mengandung angka.';
+          $msgType = 'error';
+        } elseif (strtolower($new) === strtolower($user["name"])) {
+          $message = 'Password tidak boleh sama dengan username.';
+          $msgType = 'error';
         } else {
-            $message = 'Password Lama Anda Salah!';
-            $msgType = 'error';
+        
+
+            $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
+            $stmt->execute([$uid]);
+            $pwdDb = $stmt->fetchColumn();
+    
+            if (password_verify($old, $pwdDb)) {
+    
+                $newHashed = password_hash($new, PASSWORD_BCRYPT);
+    
+                $pdo->prepare("UPDATE users SET password = ? WHERE id = ?")
+                    ->execute([$newHashed, $uid]);
+    
+                $message = 'Password Berhasil Diganti!';
+                $msgType = 'success';
+    
+            } else {
+                $message = 'Password Lama Anda Salah!';
+                $msgType = 'error';
+            }
         }
     }
 }
@@ -254,9 +284,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p class="text-2xl font-black text-emerald-500 mt-1"><?= formatRupiah($sumIn) ?></p>
             </div>
         </div>
-        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 text-white relative overflow-hidden border border-slate-700">
-            <h4 class="text-lg font-bold mb-1">Keamanan Finansial Terjamin</h4>
-            <p class="text-xs text-slate-400 max-w-sm">Seluruh mutasi data dilindungi hash enkripsi end-to-end native system architecture v2.5.</p>
+        <div class="bg-white dark:bg-slate-800 from-slate-900 to-slate-800 rounded-3xl p-6 relative overflow-hidden border border-slate-100 dark:border-slate-700">
+            <h4 class="text-lg font-bold mb-1">Keamanan Data Terjaga</h4>
+            <p class="text-xs text-slate-400 max-w-sm">
+            Catatan keuangan Anda disimpan secara pribadi dan tidak dibagikan kepada pihak lain.</p>
         </div>
     </div>
 </div>

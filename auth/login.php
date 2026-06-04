@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login - Woyzix</title>
+    <title>Login - <?php echo WEB_NAME; ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -83,14 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="glass w-full max-w-md rounded-3xl p-8 shadow-2xl relative">
         <!-- logo -->
         <div class="flex justify-center mb-6">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg">
-                F
+            <div class="w-16 h-16 rounded-2xl from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg">
+                <img src="../assets/img/1.png"/>
             </div>
         </div>
 
         <!-- title -->
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold">SpeedTech</h1>
+            <h1 class="text-3xl font-bold"><?php echo WEB_NAME; ?></h1>
             <p class="text-slate-400 text-sm mt-1">Masuk</p>
         </div>
         <?php if($error): ?><div class="bg-red-900/50 text-red-400 p-3 rounded-xl mb-4 text-sm text-center font-medium"><?= $error ?></div><?php endif; ?>
